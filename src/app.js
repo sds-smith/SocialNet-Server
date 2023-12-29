@@ -12,6 +12,8 @@ app.use(cors({
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
+app.post('/login', handleLogin);
+
 // app.use('/', (req, res) => {
 //     return res.status(200).json('hello from the backend')
 // })
