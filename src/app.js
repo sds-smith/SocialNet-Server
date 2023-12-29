@@ -1,6 +1,7 @@
 import cors from 'cors';
 import path from 'path';
 import express from 'express';
+import { authMiddleware, handleLogin } from './auth.js';
 import { apolloMiddleware, __dirname } from './apollo.server.js';
 
 const app = express();
@@ -18,6 +19,6 @@ app.post('/login', handleLogin);
 //     return res.status(200).json('hello from the backend')
 // })
 
-app.use('/graphql', apolloMiddleware);
+app.use('/graphql', authMiddleware, apolloMiddleware);
 
 export default app;
