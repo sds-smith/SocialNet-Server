@@ -1,6 +1,6 @@
 import { expressjwt } from 'express-jwt';
 import jwt from 'jsonwebtoken';
-import { getUser } from './db/users.js';
+import { getUser } from './models/auth.model.js';
 
 const secret = Buffer.from('+Z3zPGXY7v/0MoMm1p8QuHDGGVrhELGd', 'base64');
 
@@ -18,6 +18,18 @@ export async function handleLogin(req, res) {
   const { username, password } = req.body;
   const user = await getUser(username);
   if (!user || user.password !== password) {
+    res.sendStatus(401);
+  } else {
+    const claims = { sub: username };
+    const token = jwt.sign(claims, secret);
+    res.json({ token });  
+  }
+}
+
+export async function handleSignup(req, res) {
+  const { username, password } = req.body;
+  const user = await addNewUser(username, password);
+  if (!user) {
     res.sendStatus(401);
   } else {
     const claims = { sub: username };
