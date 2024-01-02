@@ -1,6 +1,6 @@
 import { expressjwt } from 'express-jwt';
 import jwt from 'jsonwebtoken';
-import { getUser } from './models/auth.model.js';
+import { getUser } from './controllers/auth.controller.js';
 
 const secret = Buffer.from('+Z3zPGXY7v/0MoMm1p8QuHDGGVrhELGd', 'base64');
 
