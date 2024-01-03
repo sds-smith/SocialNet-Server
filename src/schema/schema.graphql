@@ -1,3 +1,11 @@
 type Query {
   greeting: String
+  messages: [Message!]
+}
+
+type Message {
+  id: ID!
+  user: String!
+  text: String!
+  createdAt: String
 }
