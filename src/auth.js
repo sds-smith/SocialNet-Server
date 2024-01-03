@@ -1,6 +1,6 @@
 import { expressjwt } from 'express-jwt';
 import jwt from 'jsonwebtoken';
-import { getUser } from './controllers/auth.controller.js';
+import { httpGetUser } from './controllers/auth.controller.js';
 
 const secret = Buffer.from('+Z3zPGXY7v/0MoMm1p8QuHDGGVrhELGd', 'base64');
 
@@ -16,7 +16,7 @@ export function decodeToken(token) {
 
 export async function handleLogin(req, res) {
   const { username, password } = req.body;
-  const user = await getUser(username);
+  const user = await httpGetUser(username);
   if (!user || user.password !== password) {
     res.sendStatus(401);
   } else {
