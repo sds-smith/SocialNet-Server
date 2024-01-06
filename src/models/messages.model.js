@@ -9,6 +9,6 @@ const messagesPath = path.join(__dirname, '../data/messages.data.json')
 
 export const getMessages = async () => {
     const messages =  JSON.parse(await readFile(messagesPath, 'utf8'));
-    console.log(Object.values(messages))
+
     return Object.values(messages)
 }

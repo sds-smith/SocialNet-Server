@@ -12,9 +12,15 @@ const schemaPath = path.join(__dirname, 'schema/schema.graphql')
 const typeDefs = await readFile(schemaPath, 'utf8');
 
 async function getContext({ req }) {
+    if (req.auth) {
+        return { 
+            user: req.auth.sub,
+            message: 'hello from graphql context'
+        };
+    };
     return {
-        message: 'hello from graphql context'
-    }
+      message: 'hello from graphql context'
+    };
     // const token = req?.session?.client_token?.token;
     // const accessToken = req?.session?.passport?.user?.accessToken;
     // const id = req?.session?.passport?.user?.profile?.id;
