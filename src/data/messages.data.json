@@ -1,8 +1,0 @@
-{
-    "010101010101" : {
-        "id" : "010101010101",
-        "user" : "System",
-        "text" : "Hello from GraphQL Messages json data",
-        "createdAt": "Wed Jan 03 2024 11:37:57 GMT-0500"
-    }
-}

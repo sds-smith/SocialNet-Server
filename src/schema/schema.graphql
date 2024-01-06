@@ -4,7 +4,7 @@ type Query {
 }
 
 type Mutation {
-  addMessage(text: String!): [Message]
+  addMessage(text: String!): Message!
 }
 
 type Message {
