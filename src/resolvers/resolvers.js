@@ -1,5 +1,5 @@
 import { GraphQLError } from "graphql";
-import { getMessages } from "../models/messages.model.js";
+import { getMessages, createMessage } from "../models/messages.model.js";
 
 export const resolvers = {
     Query: {
@@ -7,6 +7,14 @@ export const resolvers = {
         messages: (_root, _args, { user }) => { 
             if (!user) throw unauthorizedError();
             return getMessages() ;
+        }
+    },
+
+    Mutation: {
+        addMessage: async (_root, { text }, { user }) => {
+            if (!user) throw unauthorizedError();
+            const message = await createMessage(user, text);
+            return message;
         }
     }
 };
