@@ -7,6 +7,10 @@ type Mutation {
   addMessage(text: String!): Message!
 }
 
+type Subscription {
+  messageAdded: Message
+}
+
 type Message {
   id: ID!
   user: String!
