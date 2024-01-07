@@ -7,9 +7,9 @@ const pubSub = new PubSub();
 export const resolvers = {
     Query: {
         greeting: (_root, _args, { message }) => message,
-        messages: (_root, _args, { user }) => { 
+        messages: async (_root, _args, { user }) => { 
             if (!user) throw unauthorizedError();
-            return getMessages();
+            return await getMessages() || [];
         }
     },
 
@@ -18,6 +18,7 @@ export const resolvers = {
             if (!user) throw unauthorizedError();
             const createResponse = await createMessage(user, text);
             if (!(await createResponse.ok)) throw createError(createResponse);
+            pubSub.publish('MESSAGE_ADDED', { messageAdded: createResponse.message});
             return await createResponse.message;
         }
     },

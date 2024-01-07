@@ -4,14 +4,16 @@ import { ApolloServer } from '@apollo/server';
 import { readFile } from 'node:fs/promises';
 import { expressMiddleware } from '@apollo/server/express4';
 import { resolvers } from './resolvers/resolvers.js';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+export const __dirname = path.dirname(__filename);
 
 const schemaPath = path.join(__dirname, 'schema/schema.graphql')
 const typeDefs = await readFile(schemaPath, 'utf8');
+export const schema =  makeExecutableSchema({ typeDefs, resolvers });
 
-async function getContext({ req }) {
+async function getHttpContext({ req }) {
     if (req.auth) {
         return { 
             user: req.auth.sub,
@@ -31,8 +33,6 @@ async function getContext({ req }) {
     // };
 };
 
-const apolloServer = new ApolloServer({typeDefs, resolvers });
+const apolloServer = new ApolloServer({ schema });
 await apolloServer.start();
-const apolloMiddleware = expressMiddleware(apolloServer, { context: getContext });
-
-export { apolloMiddleware, __dirname };
+export const apolloMiddleware = expressMiddleware(apolloServer, { context: getHttpContext });
