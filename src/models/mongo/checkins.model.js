@@ -5,17 +5,13 @@ const DEFAULT_ID = 0;
 
 export async function getCheckins() {
     const coffees = await getCoffees();
-    console.log('[checkins-model] coffees', coffees)
     const checkinsResponse = await checkins.find({}); 
-    console.log('[checkins-model] checkinsResponse', checkinsResponse)
 
-    const checkinsie = checkinsResponse.map(checkin => (
+    return checkinsResponse.map(checkin => (
         Object.assign(checkin, {
-        coffee: coffees[checkin.coffeeID]
-    })));
-    console.log('[checkins-model] checkinsie', checkinsie)
-    return checkinsie
-
+            coffee: coffees[checkin.coffeeID]
+        })
+    ));
 }
 
 async function getNextCheckinId() {

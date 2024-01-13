@@ -25,10 +25,8 @@ export const resolvers = {
             return await createResponse.message;
         },
         addCheckin: async (_root, { input }, { user }) => {
-            console.log('[addCheckin] checkin', input)
             if (!user) throw unauthorizedError();
             const createResponse = await createCheckin(input);
-            console.log('[addCheckin] createResponse', createResponse)
             if (!(await createResponse.ok)) throw createError(createResponse);
             // pubSub.publish('MESSAGE_ADDED', { messageAdded: createResponse.message});
             return await createResponse.checkin;
