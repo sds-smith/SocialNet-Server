@@ -1,10 +1,11 @@
 type Query {
-  greeting: String
   messages: [Message!]
+  checkins: [Checkin!]
 }
 
 type Mutation {
   addMessage(text: String!): Message!
+  # addCheckin(checkin: CheckinInput!): MongoCheckin!
 }
 
 type Subscription {
@@ -16,4 +17,24 @@ type Message {
   user: String!
   text: String!
   createdAt: String
+}
+
+type Checkin {
+  id: ID!
+  user: String!
+  coffee: Coffee!
+  userNotes: String
+  createdAt: String!
+}
+
+type Coffee {
+  label: String
+  roaster: String
+  singleOrigin: Boolean
+  origin: String
+  roast: String
+  process: String
+  imageUrl: String
+  tastingNotes: String
+  description: String
 }

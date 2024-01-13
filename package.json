@@ -23,6 +23,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.3",
+    "mongoose-type-url": "^2.1.0",
     "nanoid": "^5.0.4",
     "ws": "^8.16.0"
   }
