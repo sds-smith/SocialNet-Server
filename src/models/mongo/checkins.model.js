@@ -33,11 +33,14 @@ export async function createCheckin(checkin) {
     };
     const newCheckin = new checkins(checkinToCreate)
     try {
+        const coffees = await getCoffees();
         const checkinResponse = await newCheckin.save();
         return {
             ok: true,
             status: 201,
-            checkin: checkinResponse
+            checkin: Object.assign(checkinResponse, {
+                coffee: coffees[checkin.coffeeID]
+            })
         }
     } catch(err) {
         console.log(err)

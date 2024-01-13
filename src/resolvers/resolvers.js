@@ -28,7 +28,7 @@ export const resolvers = {
             if (!user) throw unauthorizedError();
             const createResponse = await createCheckin(input);
             if (!(await createResponse.ok)) throw createError(createResponse);
-            // pubSub.publish('MESSAGE_ADDED', { messageAdded: createResponse.message});
+            pubSub.publish('CHECKIN_ADDED', { checkinAdded: createResponse.checkin});
             return await createResponse.checkin;
         }
     },
@@ -38,6 +38,12 @@ export const resolvers = {
             subscribe: (_root, _args, { user }) => {
                 if (!user) throw unauthorizedError();
                 return pubSub.asyncIterator('MESSAGE_ADDED')
+            }
+        },
+        checkinAdded: {
+            subscribe: (_root, _args, { user }) => {
+                if (!user) throw unauthorizedError();
+                return pubSub.asyncIterator('CHECKIN_ADDED')
             }
         }
     }
