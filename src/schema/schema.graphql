@@ -5,7 +5,7 @@ type Query {
 
 type Mutation {
   addMessage(text: String!): Message!
-  # addCheckin(checkin: CheckinInput!): MongoCheckin!
+  addCheckin(input: CheckinInput!): CheckinResponse
 }
 
 type Subscription {
@@ -23,6 +23,7 @@ type Checkin {
   id: ID!
   user: String!
   coffee: Coffee!
+  imageUrl: String
   userNotes: String
   createdAt: String!
 }
@@ -34,7 +35,22 @@ type Coffee {
   origin: String
   roast: String
   process: String
-  imageUrl: String
   tastingNotes: String
   description: String
+}
+
+input CheckinInput {
+  user: String!
+  coffeeID: String!
+  imageUrl: String
+  userNotes: String
+}
+
+type CheckinResponse {
+  id: ID!
+  user: String!
+  coffeeID: String!
+  imageUrl: String
+  userNotes: String
+  createdAt: String!
 }

@@ -1,6 +1,8 @@
-import { coffees, checkins } from '../data/mock-data.js';
+import { checkins } from '../data/mock-data.js';
+import { getCoffees } from './mongo/coffees.model.js';
 
-export function getCheckins() {
+export async function getCheckins() {
+    const coffees = await getCoffees();
     return Object.values(checkins).map(checkin => ({
         ...checkin,
         coffee: coffees[checkin.coffeeID]
