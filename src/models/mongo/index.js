@@ -1,5 +1,5 @@
 import {
-    createUser
+    getUser
 } from './user.model.js';
 
 import { 
@@ -17,7 +17,7 @@ import {
 } from "./checkins.model.js";
 
 export {
-    createUser,
+    getUser,
     getMessages,
     createMessage,
     getCoffees,

@@ -1,17 +1,13 @@
 import { users } from './user.mongo.js';
 
-export async function getUser(uid) {
-    return await users.find({ uid }); 
+export async function getUser(userInput) {
+    const existingUser = await users.find({ uid: userInput.uid }); 
+    if (existingUser?.length) return existingUser[0];
+
+    return await createUser(userInput);
 }
 
 export async function createUser(userInput) {
-    const existingUser = await getUser(userInput.uid);
-
-    if (existingUser?.length) return {
-        ok: true,
-        status: 201,
-        user: existingUser[0]
-    }
     const newUser = new users(userInput)
     try {
         const userResponse = await newUser.save();
