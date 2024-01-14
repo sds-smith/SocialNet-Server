@@ -6,7 +6,7 @@ export async function getCoffees() {
     const coffeesToReturn = await coffees.find({}); 
     return coffeesToReturn.reduce((obj, coffee) => ({
         ...obj,
-        [coffee._id] : coffee
+        [coffee.id] : coffee
     }), {})
 }
 

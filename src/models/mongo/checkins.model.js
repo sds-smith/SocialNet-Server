@@ -5,7 +5,7 @@ const DEFAULT_ID = 0;
 
 export async function getCheckins() {
     const coffees = await getCoffees();
-    const checkinsResponse = await checkins.find({}); 
+    const checkinsResponse = await checkins.find({}).sort({ createdAt: 'desc' }); 
 
     return checkinsResponse.map(checkin => (
         Object.assign(checkin, {

@@ -3,6 +3,7 @@ import { ObjectId } from 'mongodb';
 
 const coffeeSchema = new mongoose.Schema({
     _id: ObjectId,
+    id: String,
     label: String,
     roaster: String,
     singleOrigin: Boolean,

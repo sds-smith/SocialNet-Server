@@ -1,6 +1,6 @@
 import { GraphQLError } from "graphql";
 import { PubSub } from "graphql-subscriptions";
-import { getMessages, createMessage, createCheckin, getCheckins } from "../models/mongo/index.js";
+import { createUser, getMessages, createMessage, getCoffees, createCheckin, getCheckins } from "../models/mongo/index.js";
 
 const pubSub = new PubSub();
 
@@ -10,6 +10,11 @@ export const resolvers = {
             if (!user) throw unauthorizedError();
             return await getMessages() || [];
         },
+        coffees: async (_root, _args, { user }) => { 
+            if (!user) throw unauthorizedError();
+            const coffees = await getCoffees() || {};
+            return Object.values(coffees)
+        },
         checkins: async (_root, _args, { user }) => { 
             if (!user) throw unauthorizedError();
             return await getCheckins() || [];
@@ -17,6 +22,12 @@ export const resolvers = {
     },
 
     Mutation: {
+        addUser: async (_root, { input }, _context) => {
+            const createResponse = await createUser(input);
+            if (!(await createResponse.ok)) throw createError(createResponse);
+
+            return await createResponse.user;
+        },
         addMessage: async (_root, { text }, { user }) => {
             if (!user) throw unauthorizedError();
             const createResponse = await createMessage(user, text);
