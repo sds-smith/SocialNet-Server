@@ -1,5 +1,4 @@
 type Query {
-  user(input: UserInput!): User!
   messages: [Message!]
   coffees: [Coffee!]
   checkins: [Checkin!]
@@ -48,13 +47,6 @@ type Coffee {
   process: String
   tastingNotes: String
   description: String
-}
-
-input UserInput {
-  displayName: String!
-  email: String
-  photoURL: String
-  uid: String!
 }
 
 input CheckinInput {

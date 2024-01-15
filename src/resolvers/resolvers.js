@@ -1,14 +1,11 @@
 import { GraphQLError } from "graphql";
 import { PubSub } from "graphql-subscriptions";
-import { getUser, createUser, getMessages, createMessage, getCoffees, createCheckin, getCheckins } from "../models/mongo/index.js";
+import { getMessages, createMessage, getCoffees, createCheckin, getCheckins } from "../models/mongo/index.js";
 
 const pubSub = new PubSub();
 
 export const resolvers = {
     Query: {
-        user: async (_root, {input}, _context) => { 
-            return await getUser(input)
-        },
         messages: async (_root, _args, { user }) => { 
             if (!user) throw unauthorizedError();
             return await getMessages() || [];
