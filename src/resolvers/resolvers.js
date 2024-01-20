@@ -24,14 +24,14 @@ export const resolvers = {
     Mutation: {
         addMessage: async (_root, { text }, { user }) => {
             if (!user) throw unauthorizedError();
-            const createResponse = await createMessage(user, text);
+            const createResponse = await createMessage(user.displayName, text);
             if (!(await createResponse.ok)) throw createError(createResponse);
             pubSub.publish('MESSAGE_ADDED', { messageAdded: createResponse.message});
             return await createResponse.message;
         },
         addCheckin: async (_root, { input }, { user }) => {
             if (!user) throw unauthorizedError();
-            const createResponse = await createCheckin(input);
+            const createResponse = await createCheckin(user.displayName, input);
             if (!(await createResponse.ok)) throw createError(createResponse);
             pubSub.publish('CHECKIN_ADDED', { checkinAdded: createResponse.checkin});
             return await createResponse.checkin;

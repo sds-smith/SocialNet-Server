@@ -24,11 +24,12 @@ async function getNextCheckinId() {
     return latestCheckin.id + 1
 }
 
-export async function createCheckin(checkin) {
+export async function createCheckin(user, checkin) {
     const nextId = await getNextCheckinId();
     const checkinToCreate = {
         ...checkin,
         id: nextId,
+        user,
         createdAt: Date.now()
     };
     const newCheckin = new checkins(checkinToCreate)

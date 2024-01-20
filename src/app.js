@@ -1,7 +1,7 @@
 import cors from 'cors';
 import path from 'path';
 import express from 'express';
-import { authMiddleware, handleLogin, handleSignup } from './auth.js';
+import { authMiddleware, handleLogin, handleGoogleLogin } from './auth.js';
 import { apolloMiddleware, __dirname } from './apollo.server.js';
 
 const app = express();
@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.post('/login', handleLogin);
-app.post('/signup', handleSignup);
+app.post('/googleLogin', handleGoogleLogin);
 
 app.use('/graphql', authMiddleware, apolloMiddleware);
 

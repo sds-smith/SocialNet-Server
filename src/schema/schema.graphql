@@ -50,7 +50,6 @@ type Coffee {
 }
 
 input CheckinInput {
-  user: String!
   coffeeID: String!
   imageUrl: String
   userNotes: String
