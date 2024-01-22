@@ -7,11 +7,13 @@ type Query {
 type Mutation {
   addMessage(text: String!): Message!
   addCheckin(input: CheckinInput!): Checkin
+  addCoffee(input: CoffeeInput!): Coffee
 }
 
 type Subscription {
   messageAdded: Message
   checkinAdded: Checkin
+  coffeeAdded: Coffee
 }
 
 type User {
@@ -53,4 +55,14 @@ input CheckinInput {
   coffeeID: String!
   imageUrl: String
   userNotes: String
+}
+
+input CoffeeInput {
+  label: String
+  roaster: String
+  origin: String
+  roast: String
+  process: String
+  tastingNotes: String
+  description: String
 }

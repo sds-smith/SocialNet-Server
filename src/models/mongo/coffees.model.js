@@ -1,6 +1,6 @@
 import { coffees } from './coffees.mongo.js';
 
-// const DEFAULT_ID = 0;
+const DEFAULT_ID = 0;
 
 export async function getCoffees() {
     const coffeesToReturn = await coffees.find({}); 
@@ -10,34 +10,33 @@ export async function getCoffees() {
     }), {})
 }
 
-// async function getNextCheckinId() {
-//     const latestCheckin = await checkins
-//         .findOne()
-//         .sort('-id')
-//     if (!latestCheckin) {
-//         return DEFAULT_ID
-//     }
-//     return latestCheckin.id + 1
-// }
+async function getNextCoffeeId() {
+    const latestCoffee = await coffees
+        .findOne()
+        .sort('-id')
+    if (!latestCoffee) {
+        return DEFAULT_ID
+    }
+    return latestCoffee.id + 1
+}
 
-// export async function createCheckin(user, checkin) {
-//     const nextId = await getNextCheckinId();
-//     const checkinToCreate = {
-//         id: nextId,
-//         user,
-//         checkin,
-//         createdAt: Date.now()
-//     };
-//     const newCheckin = new checkins(checkinToCreate)
-//     try {
-//         const checkinResponse = await newCheckin.save();
-//         return {
-//             ok: true,
-//             status: 201,
-//             message: checkinResponse
-//         }
-//     } catch(err) {
-//         console.log(err)
-//         return err
-//     };
-// }
+export async function createCoffee(coffeeToAdd) {
+    const nextId = await getNextCoffeeId();
+    const coffeeToCreate = {
+        id: nextId,
+        ...coffeeToAdd,
+        createdAt: Date.now()
+    };
+    const newCoffee = new coffees(coffeeToCreate)
+    try {
+        const coffeeResponse = await newCoffee.save();
+        return {
+            ok: true,
+            status: 201,
+            coffee: coffeeResponse
+        }
+    } catch(err) {
+        console.log(err)
+        return err
+    };
+}

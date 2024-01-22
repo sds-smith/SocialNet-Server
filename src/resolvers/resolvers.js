@@ -1,6 +1,6 @@
 import { GraphQLError } from "graphql";
 import { PubSub } from "graphql-subscriptions";
-import { getMessages, createMessage, getCoffees, createCheckin, getCheckins } from "../models/mongo/index.js";
+import { getMessages, createMessage, getCoffees, createCoffee, createCheckin, getCheckins } from "../models/mongo/index.js";
 
 const pubSub = new PubSub();
 
@@ -35,6 +35,13 @@ export const resolvers = {
             if (!(await createResponse.ok)) throw createError(createResponse);
             pubSub.publish('CHECKIN_ADDED', { checkinAdded: createResponse.checkin});
             return await createResponse.checkin;
+        },
+        addCoffee: async (_root, { input }, { user }) => {
+            if (!user) throw unauthorizedError();
+            const createResponse = await createCoffee(input);
+            if (!(await createResponse.ok)) throw createError(createResponse);
+            pubSub.publish('COFFEE_ADDED', { coffeeAdded: createResponse.coffee});
+            return await createResponse.coffee;
         }
     },
 
@@ -49,6 +56,12 @@ export const resolvers = {
             subscribe: (_root, _args, { user }) => {
                 if (!user) throw unauthorizedError();
                 return pubSub.asyncIterator('CHECKIN_ADDED')
+            }
+        },
+        coffeeAdded: {
+            subscribe: (_root, _args, { user }) => {
+                if (!user) throw unauthorizedError();
+                return pubSub.asyncIterator('COFFEE_ADDED')
             }
         }
     }

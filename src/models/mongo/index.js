@@ -8,7 +8,8 @@ import {
 } from "./messages.model.js";
 
 import {
-    getCoffees
+    getCoffees,
+    createCoffee,
 } from "./coffees.model.js";
 
 import { 
@@ -21,6 +22,7 @@ export {
     getMessages,
     createMessage,
     getCoffees,
+    createCoffee,
     getCheckins,
     createCheckin
 }
