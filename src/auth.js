@@ -32,10 +32,11 @@ export async function handleGoogleLogin(req, res) {
   if (!userResponse) {
     res.sendStatus(401);
   } else {
-    const { displayName, photoURL } = userResponse;
+    const { displayName, photoURL, email } = userResponse;
     const claims = { sub: {
       displayName,
-      photoURL
+      photoURL,
+      email
     } };
     const token = jwt.sign(claims, secret);
     res.json({ token });  
