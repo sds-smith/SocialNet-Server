@@ -1,8 +1,13 @@
 import { users } from './user.mongo.js';
 
+export async function getUserByEmail(email) {
+    const userByEmail = await users.find({ email }); 
+    if (userByEmail?.length) return userByEmail[0];
+}
+
 export async function getUser(userInput) {
-    const existingUser = await users.find({ email: userInput.email }); 
-    if (existingUser?.length) return existingUser[0];
+    const existingUser = await getUserByEmail(userInput.email); 
+    if (existingUser) return existingUser;
 
     return await createUser(userInput);
 }
