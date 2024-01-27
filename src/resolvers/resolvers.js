@@ -31,7 +31,7 @@ export const resolvers = {
         },
         addCheckin: async (_root, { input }, { user }) => {
             if (!user) throw unauthorizedError();
-            const createResponse = await createCheckin(user.displayName, input);
+            const createResponse = await createCheckin(user.email, input);
             if (!(await createResponse.ok)) throw createError(createResponse);
             pubSub.publish('CHECKIN_ADDED', { checkinAdded: createResponse.checkin});
             return await createResponse.checkin;
