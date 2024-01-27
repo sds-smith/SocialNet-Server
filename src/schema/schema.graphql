@@ -39,6 +39,11 @@ type Checkin {
   createdAt: String!
 }
 
+type CheckinUser {
+  displayName: String
+  email: String
+}
+
 type Coffee {
   id: ID!
   label: String

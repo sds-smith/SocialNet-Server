@@ -10,6 +10,13 @@ export async function getCoffees() {
     }), {})
 }
 
+export async function getCoffeeById(id) {
+    console.log('id', id)
+    const foundCoffee =  await coffees.find({ id }); 
+    console.log('foundCoffee', foundCoffee)
+    return foundCoffee[0]
+}
+
 async function getNextCoffeeId() {
     const latestCoffee = await coffees
         .findOne()

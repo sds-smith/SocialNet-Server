@@ -1,17 +1,31 @@
 import { checkins } from './checkins.mongo.js';
-import { getCoffees } from './coffees.model.js';
+import { getCoffees, getCoffeeById } from './coffees.model.js';
+import { getUserByEmail } from './user.model.js';
 
 const DEFAULT_ID = 0;
 
+async function getCheckinUser(userEmail) {
+    const { displayName, email } = await getUserByEmail(userEmail);
+    return { displayName, email };
+};
+
 export async function getCheckins() {
-    const coffees = await getCoffees();
     const checkinsResponse = await checkins.find({}).sort({ createdAt: 'desc' }); 
 
-    return checkinsResponse.map(checkin => (
-        Object.assign(checkin, {
-            coffee: coffees[checkin.coffeeID]
-        })
-    ));
+    const checkinUserPromises = checkinsResponse.map(async (checkin) => await getCheckinUser(checkin.user));
+    const checkinCoffeePromises = checkinsResponse.map(async (checkin) => await getCoffeeById(Number(checkin.coffeeID)));
+
+    const usersResponse = await Promise.allSettled(checkinUserPromises);
+    const coffeesResponse = await Promise.allSettled(checkinCoffeePromises);
+
+    return checkinsResponse.map((checkin, index) => ({
+        id: checkin.id,
+        imageUrl: checkin.imageUrl,
+        userNotes: checkin.userNotes,
+        createdAt: checkin.createdAt,
+        user: usersResponse[index].value.displayName,
+        coffee: coffeesResponse[index].value
+    }));
 }
 
 async function getNextCheckinId() {

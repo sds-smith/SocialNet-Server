@@ -3,6 +3,7 @@ import { users } from './user.mongo.js';
 export async function getUserByEmail(email) {
     const userByEmail = await users.find({ email }); 
     if (userByEmail?.length) return userByEmail[0];
+    console.log('User not found')
 }
 
 export async function getUser(userInput) {
