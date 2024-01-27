@@ -1,7 +1,7 @@
 import { users } from './user.mongo.js';
 
 export async function getUser(userInput) {
-    const existingUser = await users.find({ uid: userInput.uid }); 
+    const existingUser = await users.find({ email: userInput.email }); 
     if (existingUser?.length) return existingUser[0];
 
     return await createUser(userInput);
