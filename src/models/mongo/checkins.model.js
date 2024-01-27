@@ -5,8 +5,8 @@ import { getUserByEmail } from './user.model.js';
 const DEFAULT_ID = 0;
 
 async function getCheckinUser(userEmail) {
-    const { displayName, email } = await getUserByEmail(userEmail);
-    return { displayName, email };
+    const { displayName, email, photoURL } = await getUserByEmail(userEmail);
+    return { displayName, email, photoURL };
 };
 
 export async function getCheckins() {
@@ -23,7 +23,7 @@ export async function getCheckins() {
         imageUrl: checkin.imageUrl,
         userNotes: checkin.userNotes,
         createdAt: checkin.createdAt,
-        user: usersResponse[index].value.displayName,
+        user: usersResponse[index].value,
         coffee: coffeesResponse[index].value
     }));
 }

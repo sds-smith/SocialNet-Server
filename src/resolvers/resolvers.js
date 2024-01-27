@@ -17,6 +17,8 @@ export const resolvers = {
         },
         checkins: async (_root, _args, { user }) => { 
             if (!user) throw unauthorizedError();
+            const checkins = await getCheckins()
+            console.log('checkins', checkins)
             return await getCheckins() || [];
         }
     },
