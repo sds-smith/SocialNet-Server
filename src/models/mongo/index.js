@@ -17,6 +17,11 @@ import {
     createCheckin
 } from "./checkins.model.js";
 
+import {
+    getToasts,
+    createToast
+} from "./toasts.model.js";
+
 export {
     getUser,
     getMessages,
@@ -24,5 +29,7 @@ export {
     getCoffees,
     createCoffee,
     getCheckins,
-    createCheckin
+    createCheckin,
+    getToasts,
+    createToast
 }

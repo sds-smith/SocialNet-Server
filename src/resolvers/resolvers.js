@@ -1,6 +1,11 @@
 import { GraphQLError } from "graphql";
-import { PubSub } from "graphql-subscriptions";
-import { getMessages, createMessage, getCoffees, createCoffee, createCheckin, getCheckins } from "../models/mongo/index.js";
+import { PubSub, withFilter } from "graphql-subscriptions";
+import { 
+    getMessages, createMessage, 
+    getCoffees, createCoffee, 
+    getCheckins,createCheckin,
+    getToasts, createToast 
+} from "../models/mongo/index.js";
 
 const pubSub = new PubSub();
 
@@ -17,9 +22,11 @@ export const resolvers = {
         },
         checkins: async (_root, _args, { user }) => { 
             if (!user) throw unauthorizedError();
-            const checkins = await getCheckins()
-            console.log('checkins', checkins)
             return await getCheckins() || [];
+        },
+        toasts: async (_root, { checkinId }, { user }) => {
+            if (!user) throw unauthorizedError();
+            return await getToasts(checkinId) || [];
         }
     },
 
@@ -44,6 +51,12 @@ export const resolvers = {
             if (!(await createResponse.ok)) throw createError(createResponse);
             pubSub.publish('COFFEE_ADDED', { coffeeAdded: createResponse.coffee});
             return await createResponse.coffee;
+        },
+        addToast: async (_root, { input }, { user }) => {
+            if (!user) throw unauthorizedError();
+            const createResponse = await createToast(user.email, input);
+            if (!(await createResponse.ok)) throw createError(createResponse);
+            return await createResponse.toast;
         }
     },
 
@@ -65,9 +78,9 @@ export const resolvers = {
                 if (!user) throw unauthorizedError();
                 return pubSub.asyncIterator('COFFEE_ADDED')
             }
-        }
+        },
     }
-};
+}
 
 function unauthorizedError() {
     return new GraphQLError('Not authenticated', {

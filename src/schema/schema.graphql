@@ -2,18 +2,21 @@ type Query {
   messages: [Message!]
   coffees: [Coffee!]
   checkins: [Checkin!]
+  toasts(checkinId: ID!): [Toast!]
 }
 
 type Mutation {
   addMessage(text: String!): Message!
   addCheckin(input: CheckinInput!): Checkin
   addCoffee(input: CoffeeInput!): Coffee
+  addToast(input: ID!): Toast
 }
 
 type Subscription {
   messageAdded: Message
   checkinAdded: Checkin
   coffeeAdded: Coffee
+  toastAdded: Toast
 }
 
 type User {
@@ -55,6 +58,13 @@ type Coffee {
   process: String
   tastingNotes: String
   description: String
+}
+
+type Toast {
+  id: ID!
+  user: CheckinUser!
+  checkinId: ID!
+  createdAt: String!
 }
 
 input CheckinInput {
