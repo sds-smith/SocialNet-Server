@@ -16,7 +16,7 @@ type Subscription {
   messageAdded: Message
   checkinAdded: Checkin
   coffeeAdded: Coffee
-  toastAdded: Toast
+  toastAdded(checkinId: ID!): Toast
 }
 
 type User {

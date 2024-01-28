@@ -56,6 +56,7 @@ export const resolvers = {
             if (!user) throw unauthorizedError();
             const createResponse = await createToast(user.email, input);
             if (!(await createResponse.ok)) throw createError(createResponse);
+            pubSub.publish('TOAST_ADDED', { toastAdded: createResponse.toast });
             return await createResponse.toast;
         }
     },
@@ -78,6 +79,17 @@ export const resolvers = {
                 if (!user) throw unauthorizedError();
                 return pubSub.asyncIterator('COFFEE_ADDED')
             }
+        },
+        toastAdded: {
+            subscribe: withFilter(
+                (_root, _args, { user }) => {
+                    if (!user) throw unauthorizedError();
+                    return pubSub.asyncIterator('TOAST_ADDED')
+                },
+                (payload, variables) => {
+                    return Number(payload.toastAdded.checkinId) === Number(variables.checkinId);
+                }
+            )
         },
     }
 }
