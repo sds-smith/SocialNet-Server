@@ -23,6 +23,7 @@ import {
 } from "./toasts.model.js";
 
 import {
+    getComments,
     createComment
 } from "./comments.model.js";
 
@@ -36,5 +37,6 @@ export {
     createCheckin,
     getToasts,
     createToast,
+    getComments,
     createComment
 }

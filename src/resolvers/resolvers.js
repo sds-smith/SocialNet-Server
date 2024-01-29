@@ -5,7 +5,7 @@ import {
     getCoffees, createCoffee, 
     getCheckins,createCheckin,
     getToasts, createToast,
-    createComment
+    getComments, createComment
 } from "../models/mongo/index.js";
 
 const pubSub = new PubSub();
@@ -28,6 +28,10 @@ export const resolvers = {
         toasts: async (_root, { checkinId }, { user }) => {
             if (!user) throw unauthorizedError();
             return await getToasts(checkinId) || [];
+        },
+        comments: async (_root, { checkinId }, { user }) => {
+            if (!user) throw unauthorizedError();
+            return await getComments(checkinId) || [];
         }
     },
 
@@ -64,7 +68,7 @@ export const resolvers = {
             if (!user) throw unauthorizedError();
             const createResponse = await createComment(user.email, input);
             if (!(await createResponse.ok)) throw createError(createResponse);
-            // pubSub.publish('TOAST_ADDED', { toastAdded: createResponse.toast });
+            pubSub.publish('COMMENT_ADDED', { commentAdded: createResponse.comment });
             return await createResponse.comment;
         },
     },
@@ -96,6 +100,17 @@ export const resolvers = {
                 },
                 (payload, variables) => {
                     return Number(payload.toastAdded.checkinId) === Number(variables.checkinId);
+                }
+            )
+        },
+        commentAdded: {
+            subscribe: withFilter(
+                (_root, _args, { user }) => {
+                    if (!user) throw unauthorizedError();
+                    return pubSub.asyncIterator('COMMENT_ADDED')
+                },
+                (payload, variables) => {
+                    return Number(payload.commentAdded.checkinId) === Number(variables.checkinId);
                 }
             )
         },
