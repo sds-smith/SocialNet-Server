@@ -22,6 +22,10 @@ import {
     createToast
 } from "./toasts.model.js";
 
+import {
+    createComment
+} from "./comments.model.js";
+
 export {
     getUser,
     getMessages,
@@ -31,5 +35,6 @@ export {
     getCheckins,
     createCheckin,
     getToasts,
-    createToast
+    createToast,
+    createComment
 }

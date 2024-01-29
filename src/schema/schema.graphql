@@ -10,6 +10,7 @@ type Mutation {
   addCheckin(input: CheckinInput!): Checkin
   addCoffee(input: CoffeeInput!): Coffee
   addToast(input: ID!): Toast
+  addComment(input: CommentInput!): Comment
 }
 
 type Subscription {
@@ -67,6 +68,14 @@ type Toast {
   createdAt: String!
 }
 
+type Comment {
+  id: ID!
+  user: CheckinUser!
+  checkinId: ID!
+  comment: String!
+  createdAt: String!
+}
+
 input CheckinInput {
   coffeeID: String!
   imageUrl: String
@@ -81,4 +90,9 @@ input CoffeeInput {
   process: String
   tastingNotes: String
   description: String
+}
+
+input CommentInput {
+  checkinId: ID!
+  comment: String!
 }

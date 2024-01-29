@@ -4,7 +4,8 @@ import {
     getMessages, createMessage, 
     getCoffees, createCoffee, 
     getCheckins,createCheckin,
-    getToasts, createToast 
+    getToasts, createToast,
+    createComment
 } from "../models/mongo/index.js";
 
 const pubSub = new PubSub();
@@ -58,7 +59,14 @@ export const resolvers = {
             if (!(await createResponse.ok)) throw createError(createResponse);
             pubSub.publish('TOAST_ADDED', { toastAdded: createResponse.toast });
             return await createResponse.toast;
-        }
+        },
+        addComment: async (_root, { input }, { user }) => {
+            if (!user) throw unauthorizedError();
+            const createResponse = await createComment(user.email, input);
+            if (!(await createResponse.ok)) throw createError(createResponse);
+            // pubSub.publish('TOAST_ADDED', { toastAdded: createResponse.toast });
+            return await createResponse.comment;
+        },
     },
 
     Subscription: {
