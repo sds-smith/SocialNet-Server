@@ -20,11 +20,12 @@ export async function handleLogin(req, res) {
   if (!userResponse) {
     res.sendStatus(401);
   } else {
-    const { displayName, photoURL, email } = userResponse;
+    const { displayName, photoURL, email, friends } = userResponse;
     const claims = { sub: {
       displayName,
       photoURL,
-      email
+      email,
+      friends
     } };
     const token = jwt.sign(claims, secret);
     res.json({ token });  
