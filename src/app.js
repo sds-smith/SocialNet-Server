@@ -7,7 +7,7 @@ import { apolloMiddleware, __dirname } from './apollo.server.js';
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:3000'
+    origin: ['http://localhost:3000', 'https://cup-coffee-social.netlify.app/']
 }));
 
 app.use(express.json());
