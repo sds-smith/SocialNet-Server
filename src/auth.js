@@ -1,6 +1,7 @@
 import { expressjwt } from 'express-jwt';
 import jwt from 'jsonwebtoken';
 import { httpGetUser, httpGetGoogleUser } from './controllers/auth.controller.js';
+import { getAuthUserById } from './util/firebase.js';
 
 const secret = Buffer.from('+Z3zPGXY7v/0MoMm1p8QuHDGGVrhELGd', 'base64');
 
@@ -28,7 +29,7 @@ export async function handleLogin(req, res) {
 
 export async function handleGoogleLogin(req, res) {
   const googleUser = req.body;
-  const userResponse = await httpGetGoogleUser(googleUser);
+  const userResponse = await getAuthUserById(googleUser.uid)
   if (!userResponse) {
     res.sendStatus(401);
   } else {
