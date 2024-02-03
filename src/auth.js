@@ -15,12 +15,12 @@ export function decodeToken(token) {
 };
 
 export async function handleLogin(req, res) {
-  const googleUser = req.body;
-  const userResponse = await getAuthUserById(googleUser.uid)
-  if (!userResponse) {
+  const userRequestingAuth = req.body;
+  const authUser = await getAuthUserById(userRequestingAuth.uid)
+  if (!authUser) {
     res.sendStatus(401);
   } else {
-    const { displayName, photoURL, email, friends } = userResponse;
+    const { displayName, photoURL, email, friends } = authUser;
     const claims = { sub: {
       displayName,
       photoURL,
