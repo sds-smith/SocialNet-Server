@@ -26,7 +26,7 @@ async function startServer() {
     
     httpServer.listen(PORT, () => {
         console.log(`Listening on port ${PORT}`);
-        console.log(`GraphQL endpoint: http://localhost:${PORT}/graphql`);
+        console.log(`GraphQL endpoint: http://localhost:${PORT}/v1`);
     });
 };
 

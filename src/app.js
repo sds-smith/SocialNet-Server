@@ -15,6 +15,6 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.post('/login', handleLogin);
 
-app.use('/graphql', authMiddleware, apolloMiddleware);
+app.use('/v1', authMiddleware, apolloMiddleware);
 
 export default app;
