@@ -18,7 +18,7 @@ async function getWsContext({ connectionParams }) {
 };
 
 const httpServer = http.createServer(app);
-const wsServer = new WebSocketServer({ server: httpServer, path: '/graphql' });
+const wsServer = new WebSocketServer({ server: httpServer, path: '/v1' });
 useWsServer({ schema, context: getWsContext }, wsServer);
 
 async function startServer() {
