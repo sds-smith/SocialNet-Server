@@ -13,8 +13,8 @@ app.use(cors({
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-app.use('/*', (_req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", 'https://cup-coffee-social.netlify.app/');
+app.use('/', (_req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", '*');
     res.header(
       "Access-Control-Allow-Headers",
       "Origin, X-Requested-With, Content-Type, Accept"
