@@ -7,21 +7,21 @@ import { apolloMiddleware, __dirname } from './apollo.server.js';
 const app = express();
 
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://cup-coffee-social.netlify.app/'],
+    origin: process.env.CLIENT_URL,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
 }));
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-app.use((_req, res, next) => {
-    res.header("Access-Control-Allow-Origin", '*');
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    next();
-});
+// app.use((_req, res, next) => {
+//     res.header("Access-Control-Allow-Origin", '*');
+//     res.header(
+//       "Access-Control-Allow-Headers",
+//       "Origin, X-Requested-With, Content-Type, Accept"
+//     );
+//     next();
+// });
 
 app.post('/login', handleLogin);
 
