@@ -1,11 +1,11 @@
 import { checkins } from './checkins.mongo.js';
 import { getCoffees, getCoffeeById } from './coffees.model.js';
-import { getUserByEmail } from './user.model.js';
+import { getUserById } from '../../util/firebase.js';
 
 const DEFAULT_ID = 0;
 
-async function getCheckinUser(userEmail) {
-    const { displayName, email, photoURL } = await getUserByEmail(userEmail);
+async function getCheckinUser(uid) {
+    const { displayName, email, photoURL } = await getUserById(uid);
     return { displayName, email, photoURL };
 };
 

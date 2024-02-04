@@ -1,7 +1,3 @@
-import {
-    getUser
-} from './user.model.js';
-
 import { 
     getMessages, 
     createMessage 
@@ -28,7 +24,6 @@ import {
 } from "./comments.model.js";
 
 export {
-    getUser,
     getMessages,
     createMessage,
     getCoffees,

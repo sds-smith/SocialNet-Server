@@ -1,10 +1,10 @@
 import { comments } from "./comments.mongo.js";
-import { getUserByEmail } from "./user.model.js";
+import { getUserById } from "../../util/firebase.js";
 
 const DEFAULT_ID = 0;
 
-async function getCommentUser(userEmail) {
-    const { displayName, email, photoURL } = await getUserByEmail(userEmail);
+async function getCommentUser(uid) {
+    const { displayName, email, photoURL } = await getUserById(uid);
     return { displayName, email, photoURL };
 };
 

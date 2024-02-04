@@ -20,12 +20,13 @@ export async function handleLogin(req, res) {
   if (!authUser) {
     res.sendStatus(401);
   } else {
-    const { displayName, photoURL, email, friends } = authUser;
+    const { displayName, photoURL, email, friends, uid } = authUser;
     const claims = { sub: {
       displayName,
       photoURL,
       email,
-      friends
+      friends,
+      uid
     } };
     const token = jwt.sign(claims, secret);
     res.json({ token });  

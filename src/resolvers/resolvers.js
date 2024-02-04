@@ -45,7 +45,7 @@ export const resolvers = {
         },
         addCheckin: async (_root, { input }, { user }) => {
             if (!user) throw unauthorizedError();
-            const createResponse = await createCheckin(user.email, input);
+            const createResponse = await createCheckin(user.uid, input);
             if (!(await createResponse.ok)) throw createError(createResponse);
             pubSub.publish('CHECKIN_ADDED', { checkinAdded: createResponse.checkin});
             return await createResponse.checkin;
@@ -59,7 +59,7 @@ export const resolvers = {
         },
         addToast: async (_root, { input }, { user }) => {
             if (!user) throw unauthorizedError();
-            const createResponse = await createToast(user.email, input);
+            const createResponse = await createToast(user.uid, input);
             if (!(await createResponse.ok)) throw createError(createResponse);
             console.log('[addToast] Toast Added!')
             pubSub.publish('TOAST_ADDED', { toastAdded: createResponse.toast });
@@ -67,7 +67,7 @@ export const resolvers = {
         },
         addComment: async (_root, { input }, { user }) => {
             if (!user) throw unauthorizedError();
-            const createResponse = await createComment(user.email, input);
+            const createResponse = await createComment(user.uid, input);
             if (!(await createResponse.ok)) throw createError(createResponse);
             pubSub.publish('COMMENT_ADDED', { commentAdded: createResponse.comment });
             return await createResponse.comment;

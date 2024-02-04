@@ -1,10 +1,10 @@
 import { toasts } from "./toasts.mongo.js";
-import { getUserByEmail } from "./user.model.js";
+import { getUserById } from "../../util/firebase.js";
 
 const DEFAULT_ID = 0;
 
-async function getToastUser(userEmail) {
-    const { displayName, email, photoURL } = await getUserByEmail(userEmail);
+async function getToastUser(uid) {
+    const { displayName, email, photoURL } = await getUserById(uid);
     return { displayName, email, photoURL };
 };
 

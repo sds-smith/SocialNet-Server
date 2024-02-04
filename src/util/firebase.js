@@ -23,6 +23,12 @@ export async function getAuthUserById(uid) {
   })
 }
 
+export const getUserById = async (uid) => {
+  const userDocRef = db.doc(`users/${uid}`)
+  const userSnap = await userDocRef.get();
+  return userSnap.data();
+}
+
 export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
   if (!userAuth) return
   const userDocRef = db.doc(`users/${userAuth.uid}`)
